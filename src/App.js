@@ -6,16 +6,37 @@ const App = () => {
   const [showCelebration, setShowCelebration] = useState(false);
   const [currentDate] = useState(new Date());
 
-  // Load progress from memory on component mount
+  // Get today's date as string (YYYY-MM-DD format)
+  const getTodayDateString = () => {
+    const today = new Date();
+    return today.toISOString().split('T')[0];
+  };
+
+  // Load progress from localStorage on component mount
   useEffect(() => {
-    const savedProgress = JSON.parse(localStorage.getItem('nativeProgress') || '{"steps": []}');
-    setCompletedSteps(new Set(savedProgress.steps));
+    const todayDateString = getTodayDateString();
+    const savedProgress = JSON.parse(localStorage.getItem('nativeProgress') || '{"steps": [], "date": ""}');
+
+    // If the saved date is different from today, reset progress
+    if (savedProgress.date !== todayDateString) {
+      setCompletedSteps(new Set());
+      // Save empty progress with today's date
+      const newProgress = {
+        steps: [],
+        date: todayDateString
+      };
+      localStorage.setItem('nativeProgress', JSON.stringify(newProgress));
+    } else {
+      // Load existing progress if it's from today
+      setCompletedSteps(new Set(savedProgress.steps));
+    }
   }, []);
 
-  // Save progress to memory
+  // Save progress to localStorage with current date
   const saveProgress = (steps) => {
     const progress = {
-      steps: Array.from(steps)
+      steps: Array.from(steps),
+      date: getTodayDateString()
     };
     localStorage.setItem('nativeProgress', JSON.stringify(progress));
   };
