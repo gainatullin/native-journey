@@ -61,7 +61,7 @@ const App = () => {
       description: 'Swap SUI for nBTC and back on the Native testnet to help test the protocol.',
       link: 'https://byield.gonative.cc/',
       icon: <Zap className="w-5 h-5" />,
-      streak: false,
+      streak: true,
       category: 'Testing'
     },
     {
