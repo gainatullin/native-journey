@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CheckCircle, Award, Palette, Zap, ExternalLink, Trophy, Calendar, MessageCircle, Twitter, Clock, BarChart3 } from 'lucide-react';
+import { CheckCircle, Award, Palette, Zap, BaggageClaim, ExternalLink, Trophy, Calendar, MessageCircle, Twitter, Clock, BarChart3, BookDown } from 'lucide-react';
 
 const App = () => {
   const [completedSteps, setCompletedSteps] = useState(new Set());
@@ -62,6 +62,24 @@ const App = () => {
       link: 'https://byield.gonative.cc/',
       icon: <Zap className="w-5 h-5" />,
       streak: true,
+      category: 'Testing'
+    },
+    {
+      id: 'talentum-quest',
+      title: 'Talentum Tasks',
+      description: 'Join the Native project on Talentum and complete all available tasks. Visit daily to check in and receive credits.',
+      link: 'https://sui.talentum.id/projects/native-bitcoin-yield-hub',
+      icon: <BookDown className="w-5 h-5" />,
+      streak: true,
+      category: 'Social'
+    },
+    {
+      id: 'faucet-claim',
+      title: 'Request Testnet SUI',
+      description: 'Paste your SUI address and request testnet SUI to swap SUI for nBTC',
+      link: 'https://faucet.sui.io/?network=testnet',
+      icon: <BaggageClaim className="w-5 h-5" />,
+      streak: false,
       category: 'Testing'
     },
     {
@@ -154,7 +172,7 @@ const App = () => {
   ];
 
   const completedDaily = dailyTasks.filter(task => completedSteps.has(task.id)).length;
-  const isBeeLiever = completedDaily === 4;
+  const isBeeLiever = completedDaily === dailyTasks.length;
   const progress = (completedDaily / dailyTasks.length) * 100;
 
   const formatDate = (date) => {
